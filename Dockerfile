@@ -11,6 +11,7 @@ WORKDIR /app
 COPY requirements.txt /
 
 # Install any needed packages specified in requirements.txt
+RUN apt-get update && apt-get install -y libgtk2.0-dev
 RUN pip install --no-cache-dir --trusted-host pypi.python.org -r /requirements.txt
 
 # Copy the current directory contents into the container at /app
