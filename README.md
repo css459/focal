@@ -56,6 +56,7 @@ like so:
 
 ## Response
 The response will be formatted like so:
+
     {
         'class':            str(cls),
         'probability':      float(conf),
