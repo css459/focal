@@ -16,10 +16,25 @@ from PIL import Image
 # filepath = "n09835506_31225.JPEG"
 # output path = "."
 
+def decodePIL(s, outpath):
+    # Convert the blurred image base64 string to a RAW Python string
+    raw = "%r" % s
+
+    # Decode that raw base64 string to a BytesIO object
+    b = BytesIO(base64.b64decode(raw))
+
+    # Use PIL to open those image bytes
+    im = Image.open(b)
+
+    # Save that image to the output path (default response.jpg, or given by STDIN)
+    im.save(outpath)
+
+    return im
+
 url = sys.argv[1]
 filepath = sys.argv[2]
 
-output_path = "img/response.jpg"
+output_path = "./response.jpg"
 if len(sys.argv) == 4:
     output_path = sys.argv[3]
 
@@ -38,14 +53,8 @@ with open(filepath, "rb") as fp:
     # Print the JSON keys we got back
     print(r.json().keys())
 
-    # Convert the blurred image base64 string to a RAW Python string
-    raw = "%r" % r.json()['blurredImage']
+    print("Found:", r.json()['class'], "proba:", r.json()['probability'])
 
-    # Decode that raw base64 string to a BytesIO object
-    b = BytesIO(base64.b64decode(raw))
-
-    # Use PIL to open those image bytes
-    im = Image.open(b)
-
-    # Save that image to the output path (default response.jpg, or given by STDIN)
-    im.save(output_path)
+    decodePIL(r.json()['blurredImage'], output_path)
+    decodePIL(r.json()['maskImage'], "mask.jpg")
+    decodePIL(r.json()['unblurredMask'], "origmask.jpg")
