@@ -32,12 +32,7 @@ A group of dogs (Welsh Springer Spaniels, specifically)
 
 ![dogs_blur](img/dogs_blur.jpg)
 
-# Setup
-
-## With Docker
-TODO
-
-## Without Docker
+# Setup (without Docker)
 Install the requirements with Pip
 
     pip3 install -r requirements.txt
